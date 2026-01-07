@@ -3,7 +3,7 @@
 # post : Send or add data
 # put : update data
 # delete : delete data
-require_relative '../models/usre.rb'
+require_relative '../models/user.rb'
 
 get '/' do
   content_type :html
@@ -20,7 +20,7 @@ get '/showUser/:id' do
   content_type :html
   id = params[:id]
   begin
-    @user = DB.execute("SELECT * FROM users WHERE id = ?;",[id]).first
+    @user = User.show(id)
     erb :profile
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -32,8 +32,9 @@ post '/newUser' do
   email = params[:email]
   password = params[:password]
   begin
-    DB.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?);",[username, email, password])
-    user_id = DB.last_insert_row_id
+    user_id = User.create(username, email, password)
+    # DB.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?);",[username, email, password])
+    # user_id = DB.last_insert_row_id
     redirect "/showUser/#{user_id}"
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -44,7 +45,7 @@ get '/editUser/:id' do
   content_type :html
   id = params[:id]
   begin
-    @user = DB.execute("SELECT * FROM users WHERE id = ?;",[id]).first
+    @user = User.edit(id)
     erb :editUser
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -56,7 +57,8 @@ put '/updateUser' do
   username = params[:username]
   email = params[:email]
   begin
-    DB.execute("UPDATE users SET username = ?,  email = ? WHERE id = ?",[username, email, id])
+    User.update(username, email, id)
+    # DB.execute("UPDATE users SET username = ?,  email = ? WHERE id = ?",[username, email, id])
     redirect "/showUser/#{id}"
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -70,7 +72,8 @@ put '/changePassword' do
   password_again = params[:password_again]
   begin
     if password == password_again
-      DB.execute("UPDATE users SET password = ? WHERE id = ?",[password, id])
+      User.changePassword(password, id)
+      # DB.execute("UPDATE users SET password = ? WHERE id = ?",[password, id])
       session[:type_chpass] = "success"
       session[:message_chpass] = "Update successfully user : #{username}"
       redirect "/showUser/#{id}"
@@ -87,7 +90,8 @@ end
 delete '/deleteUser/:id' do 
   id = params[:id]
   begin
-    DB.execute("DELETE FROM users WHERE id = ?",[id])
+    User.destroy(id)
+    # DB.execute("DELETE FROM users WHERE id = ?",[id])
     redirect "/"
   rescue => e
     halt 500, "Error is #{e.message}"
