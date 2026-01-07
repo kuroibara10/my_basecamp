@@ -1,0 +1,70 @@
+require_relative '../models/project.rb'
+
+get '/projects' do
+  content_type :html
+  begin
+    @projects = Project.all
+    erb :"projects/projects"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+get '/projects/showProject/:id' do
+  content_type :html
+  id = params[:id]
+  begin
+    @project = Project.show(id)
+    erb :"projects/showProject"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+post '/projects/newProject' do 
+  name = params[:name]
+  description = params[:description]
+  email_origin = params[:email_origin]
+  user_id = params[:user_id]
+  begin
+    project_id = Project.create(name, description, email_origin, user_id)
+    redirect "/projects/showProject/#{project_id}"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+get '/projects/editProject/:id' do
+  content_type :html
+  id = params[:id]
+  begin
+    @project = Project.edit(id)
+    erb :"projects/editProject"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+put '/projects/updateProject' do 
+  id = params[:id]
+  name = params[:name]
+  description = params[:description]
+  email_origin = params[:email_origin]
+  user_id = params[:user_id]
+  begin
+    Project.update(id, name, description, email_origin, user_id)
+    redirect "/projects/showProject/#{id}"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+delete '/projects/deleteProject/:id' do 
+  id = params[:id]
+  begin
+    Project.destroy(id)
+    redirect "/projects"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end

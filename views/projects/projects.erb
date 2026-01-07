@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+</head>
+<body>
+    <div>
+        <% if @projects && @projects.any? %>
+        <h1>All projects : </h1>
+        <table border=1>
+            <tr>
+                <th>Id</th>
+                <th>name</td>
+                <th>description</th>
+                <th>email_origin</th>
+                <th>user_id</th>
+            </tr>
+        <% @projects.each do |project|%>
+            <tr>
+                <td><%= project["id"]%></td>
+                <td><%= project["name"]%></td>
+                <td><%= project["description"]%></td>
+                <td><%= project["email_origin"]%></td>
+                <td><%= project["user_id"]%></td>
+                <td>
+                    <form action="/projects/showProject/<%= project["id"]%>" method="get">
+                        <input type="submit" value="show">
+                    </form>
+                     <form action="/deleteproject/<%= project["id"]%>" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        <% end %>
+        </table>
+        <% else %>
+        <p>Not Found any project</p>
+        <% end %>
+        <h1>Add new project : </h1>
+        <form action="/projects/newProject" method="post">
+            <div>
+                <lable>name : </lable>
+                <input name="name" type="text" required>
+            </div>
+            <div>
+                <lable>description : </lable>
+                <input name="description" type="text" required>
+            </div>
+            <div>
+                <lable>email_origin : </lable>
+                <input name="email_origin" type="email" required>
+            </div>            
+            <div>
+                <lable>user_id : </lable>
+                <input name="user_id" type="number" required>
+            </div>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+</body>
+</html>

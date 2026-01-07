@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Project</title>
+</head>
+<body>
+    <div>
+        <% if @project %>
+            <h1>Information  project : </h1>
+            <p>ID = <%= @project["id"]%></p>
+            <p>name = <%= @project["name"]%></p>
+            <p>description = <%= @project["description"]%></p>
+            <p>email_origin = <%= @project["email_origin"]%></p>
+            <p>user_id = <%= @project["user_id"]%></p>
+            <form action="/projects/editProject/<%= @project["id"]%>" method="get">
+                <input type="submit" value="Edit">
+            </form>
+        <% else %>
+        <p>Not Found any project</p>
+        <% end %>
+    </div>
+</body>
+</html>

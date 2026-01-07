@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Project</title>
+</head>
+<body>
+    <div>
+        <% if @project %>
+            <h1>Information  project : </h1>
+            <form action="/projects/updateProject" method="post">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="id" value="<%= @project["id"]%>">
+                <div>
+                    <lable>name : </lable>
+                    <input name="name" type="text" value="<%= @project["name"]%>" required>
+                </div>
+                <div>
+                    <lable>description : </lable>
+                    <input name="description" type="text" value="<%= @project["description"]%>" required>
+                </div>
+                <div>
+                    <lable>email_origin : </lable>
+                    <input name="email_origin" type="email" value="<%= @project["email_origin"]%>" required>
+                </div>         
+                <div>
+                    <lable>user_id : </lable>
+                    <input name="user_id" type="nnumber" value="<%= @project["user_id"]%>" required>
+                </div>
+                <input type="submit" value="Update">
+            </form>
+        <% else %>
+        <p>Not Found any project</p>
+        <% end %>
+    </div>
+</body>
+</html>
