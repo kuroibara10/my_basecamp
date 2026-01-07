@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <% if @user %>
+            <h1>Information  User : </h1>
+            <form action="/updateUser" method="post">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="id" value="<%= @user["id"]%>">
+                <div>
+                    <lable>Username : </lable>
+                    <input name="username" type="text" value="<%= @user["username"]%>" required>
+                </div>
+                <div>
+                    <lable>Email : </lable>
+                    <input name="email" type="email" value="<%= @user["email"]%>" required>
+                </div>
+                <div>
+                    <lable>Password : </lable>
+                    <input name="password" type="password" value="<%= @user["password"]%>" required>
+                </div>            
+                <input type="submit" value="Update">
+            </form>
+            <h1>Change Password :</h1>
+            <form action="/changePassword" method="post">
+                <input type="hidden" name="_method" value="put">
+                <input type="hidden" name="id" value="<%= @user["id"]%>">
+                <input type="hidden" name="username" value="<%= @user["username"]%>">
+                <div>
+                    <lable>Password : </lable>
+                    <input name="password" type="password" required>
+                </div>            
+                <div>
+                    <lable>Password Again : </lable>
+                    <input name="password_again" type="password" required>
+                </div>            
+                <input type="submit" value="Change">
+            </form>
+        <% else %>
+        <p>Not Found any user</p>
+        <% end %>
+    </div>
+</body>
+</html>

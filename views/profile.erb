@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <% if @user %>
+            <h1>Information  User : </h1>
+            <p>ID = <%= @user["id"]%></p>
+            <p>Username = <%= @user["username"]%></p>
+            <p>Email = <%= @user["email"]%></p>
+            <form action="/editUser/<%= @user["id"]%>" method="get">
+                <input type="submit" value="Edit">
+            </form>
+        <% else %>
+        <p>Not Found any user</p>
+        <% end %>
+    </div>
+</body>
+</html>
