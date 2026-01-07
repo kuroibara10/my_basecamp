@@ -10,7 +10,18 @@ get '/projects' do
   end
 end
 
-get '/projects/showProject/:id' do
+get '/home/create_project' do
+  content_type :html
+  id = params[:id]
+  begin
+    @project = Project.show(id)
+    erb :"projects/createProject"
+  rescue => e
+    halt 500, "Error is #{e.message}"
+  end
+end
+
+get '/home/show_project/:id' do
   content_type :html
   id = params[:id]
   begin
@@ -34,7 +45,7 @@ post '/projects/newProject' do
   end
 end
 
-get '/projects/editProject/:id' do
+get '/home/edit_project/:id' do
   content_type :html
   id = params[:id]
   begin

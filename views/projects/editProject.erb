@@ -6,33 +6,20 @@
     <title>Edit Project</title>
 </head>
 <body>
-    <div>
-        <% if @project %>
-            <h1>Information  project : </h1>
-            <form action="/projects/updateProject" method="post">
-                <input type="hidden" name="_method" value="put">
-                <input type="hidden" name="id" value="<%= @project["id"]%>">
-                <div>
-                    <lable>name : </lable>
-                    <input name="name" type="text" value="<%= @project["name"]%>" required>
-                </div>
-                <div>
-                    <lable>description : </lable>
-                    <input name="description" type="text" value="<%= @project["description"]%>" required>
-                </div>
-                <div>
-                    <lable>email_origin : </lable>
-                    <input name="email_origin" type="email" value="<%= @project["email_origin"]%>" required>
-                </div>         
-                <div>
-                    <lable>user_id : </lable>
-                    <input name="user_id" type="nnumber" value="<%= @project["user_id"]%>" required>
-                </div>
-                <input type="submit" value="Update">
-            </form>
-        <% else %>
-        <p>Not Found any project</p>
-        <% end %>
-    </div>
+<h1>Edit Project</h1>
+<form action="/projects/<%= @project["id"] %>" method="post">
+  <input type="hidden" name="_method" value="put">
+  
+  <label>Project Name:</label>
+  <input type="text" name="name" value="<%= @project["name"] %>" required>
+  
+  <label>Description:</label>
+  <textarea name="description" required><%= @project["description"] %></textarea>
+  
+  <label>Share with Email:</label>
+  <input type="email" name="email_origin" value="<%= @project["email_origin"] %>">
+  
+  <button type="submit">Update Project</button>
+</form>
 </body>
 </html>
