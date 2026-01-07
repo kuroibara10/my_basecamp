@@ -40,7 +40,7 @@ post '/projects/newProject' do
   user_id = params[:user_id]
   begin
     project_id = Project.create(name, description, email_origin, user_id)
-    redirect "/projects/showProject/#{project_id}"
+    redirect "/home/show_project/#{project_id}"
   rescue => e
     halt 500, "Error is #{e.message}"
   end
@@ -57,7 +57,7 @@ get '/home/edit_project/:id' do
   end
 end
 
-put '/projects/updateProject' do 
+put '/projects/updateProject/:id' do 
   id = params[:id]
   name = params[:name]
   description = params[:description]
@@ -65,7 +65,7 @@ put '/projects/updateProject' do
   user_id = params[:user_id]
   begin
     Project.update(id, name, description, email_origin, user_id)
-    redirect "/projects/showProject/#{id}"
+    redirect "/home/show_project/#{id}"
   rescue => e
     halt 500, "Error is #{e.message}"
   end
@@ -75,7 +75,7 @@ delete '/projects/deleteProject/:id' do
   id = params[:id]
   begin
     Project.destroy(id)
-    redirect "/projects"
+    redirect "/home"
   rescue => e
     halt 500, "Error is #{e.message}"
   end

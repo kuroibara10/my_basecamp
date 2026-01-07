@@ -12,7 +12,9 @@
 </header>
 
 <main>
-  <form action="/projects" method="post">
+  <form action="/projects/newProject" method="post">
+    <input type="hidden" name="user_id" value="<%= session[:user_id] %>"required>
+
     <label>Project Name:</label>
     <input type="text" name="name" required>
 
