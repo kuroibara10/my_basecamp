@@ -4,22 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Project</title>
+    <link rel="stylesheet" href="/css/projects.css">
 </head>
 <body>
-<h1>Edit Project</h1>
-<form action="/projects/<%= @project["id"] %>" method="post">
-  <input type="hidden" name="_method" value="put">
-  
-  <label>Project Name:</label>
-  <input type="text" name="name" value="<%= @project["name"] %>" required>
-  
-  <label>Description:</label>
-  <textarea name="description" required><%= @project["description"] %></textarea>
-  
-  <label>Share with Email:</label>
-  <input type="email" name="email_origin" value="<%= @project["email_origin"] %>">
-  
-  <button type="submit">Update Project</button>
-</form>
+<header>
+  <h1>Edit Project</h1>
+  <a class="logout-btn" href="/logout">Logout</a>
+</header>
+
+<main>
+  <form action="/projects/<%= @project["id"] %>" method="post">
+    <input type="hidden" name="_method" value="put">
+
+    <label>Project Name:</label>
+    <input type="text" name="name" value="<%= @project["name"] %>" required>
+
+    <label>Description:</label>
+    <textarea name="description" required><%= @project["description"] %></textarea>
+
+    <label>Share with Email:</label>
+    <input type="email" name="email_origin" value="<%= @project["email_origin"] %>">
+
+    <button type="submit">Update Project</button>
+  </form>
+</main>
 </body>
 </html>

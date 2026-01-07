@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <title>Creat - Projects</title>
-  <link rel="stylesheet" href="/css/home.css">
+  <link rel="stylesheet" href="/css/projects.css">
 </head>
 <body>
-<h1>Create New Project</h1>
-<form action="/projects" method="post">
-  <label>Project Name:</label>
-  <input type="text" name="name" required>
-  
-  <label>Description:</label>
-  <textarea name="description" required></textarea>
-  
-  <label>Share with Email (optional):</label>
-  <input type="email" name="email_origin">
-  
-  <button type="submit">Create Project</button>
-</form>
+<header>
+  <h1>Create New Project</h1>
+  <a class="logout-btn" href="/logout">Logout</a>
+</header>
+
+<main>
+  <form action="/projects" method="post">
+    <label>Project Name:</label>
+    <input type="text" name="name" required>
+
+    <label>Description:</label>
+    <textarea name="description" required></textarea>
+
+    <label>Share with Email (optional):</label>
+    <input type="email" name="email_origin">
+
+    <button type="submit">Create Project</button>
+  </form>
+</main>
 </body>
 </html>

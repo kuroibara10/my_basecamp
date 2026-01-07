@@ -14,7 +14,7 @@ get '/home/create_project' do
   content_type :html
   id = params[:id]
   begin
-    @project = Project.show(id)
+    # @project = Project.show(id)
     erb :"projects/createProject"
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -26,6 +26,7 @@ get '/home/show_project/:id' do
   id = params[:id]
   begin
     @project = Project.show(id)
+    @owner = DB.execute("SELECT * FROM users WHERE id = ?;",[@project["user_id"]]).first
     erb :"projects/showProject"
   rescue => e
     halt 500, "Error is #{e.message}"

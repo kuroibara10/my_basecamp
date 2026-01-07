@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Show Project</title>
+    <link rel="stylesheet" href="/css/projects.css">
 </head>
 <body>
-<h1><%= @project["name"] %></h1>
-<p><strong>Description:</strong> <%= @project["description"] %></p>
-<p><strong>Owner:</strong> <%= @owner["username"] %> (<%= @owner["email"] %>)</p>
+<header>
+  <h1><%= @project["name"] %></h1>
+  <a class="logout-btn" href="/logout">Logout</a>
+</header>
 
-<a href="/home">Back to Home</a>
+<main>
+  <div class="project-card">
+    <p><strong>Description:</strong> <%= @project["description"] %></p>
+    <p><strong>Owner:</strong> <%= @owner["username"] %> (<%= @owner["email"] %>)</p>
+    <a class="back-btn" href="/home">Back to Home</a>
+  </div>
+</main>
 </body>
 </html>
