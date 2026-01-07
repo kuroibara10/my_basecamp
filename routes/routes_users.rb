@@ -5,7 +5,7 @@
 # delete : delete data
 require_relative '../models/user.rb'
 
-get '/' do
+get '/users' do
   content_type :html
   begin
     @users = User.all
@@ -92,7 +92,7 @@ delete '/deleteUser/:id' do
   begin
     User.destroy(id)
     # DB.execute("DELETE FROM users WHERE id = ?",[id])
-    redirect "/"
+    redirect "/users"
   rescue => e
     halt 500, "Error is #{e.message}"
   end

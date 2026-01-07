@@ -9,4 +9,5 @@ DB = SQLite3::Database.new("db/manager.db")
 DB.results_as_hash=true
 
 require_relative 'routes/routes_users.rb'
+require_relative 'routes/routes_auth.rb'
 require_relative 'routes/routes_projects.rb'
