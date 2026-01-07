@@ -1,64 +1,125 @@
+# INDEX
 get '/' do
-  content_type :html
-  begin
-    erb :index
-  rescue => e
-    halt 500, "Failed to load page index : #{e.message}"
-  end
-end
-get '/login' do 
-  content_type :html
-  begin 
-    erb :login
-  rescue => e
-    halt 500, "Fail to load page Login: #{e.message}"
-  end
+  erb :index
 end
 
+# SIGNUP PAGE
+get '/signup' do
+  erb :signup
+end
+
+# LOGIN PAGE
+get '/login' do
+  erb :login
+end
+
+# LOGOUT
+get '/logout' do
+  session.clear
+  redirect '/'
+end
+
+# HOME (PROTECTED)
 get '/home' do
-  content_type :html
+  redirect '/login' unless session[:user_id]
+
+  @user = DB.execute("SELECT * FROM users WHERE id = ?", [session[:user_id]]).first
+
+  unless @user
+    session.clear
+    redirect '/login'
+  end
+
+  # Projects created by user
+  @projects_created = DB.execute(
+    "SELECT * FROM projects WHERE user_id = ?",
+    [@user["id"]]
+  )
+
+  # Projects shared with user
+  @projects_shared = DB.execute(
+    "SELECT * FROM projects WHERE email_origin = ? AND user_id != ?",
+    [@user["email"], @user["id"]]
+  )
+
+  # All projects relevant to user
+  @projects_all = @projects_created + @projects_shared
+
+  erb :home
+end
+
+# ----------------------------
+# POST SIGNUP
+# ----------------------------
+post '/signup' do
+  username = params[:username]&.strip
+  email = params[:email]&.strip
+  password = params[:password]
+  password_again = params[:password_again]
+
+  # Validate input
+  if [username, email, password, password_again].any?(&:nil?) || [username, email, password, password_again].any?(&:empty?)
+    session[:type] = "error"
+    session[:message] = "All fields are required"
+    redirect '/signup'
+  end
+
+  if password != password_again
+    session[:type] = "error"
+    session[:message] = "Passwords do not match"
+    redirect '/signup'
+  end
+
   begin
-    erb :home
+    DB.execute(
+      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+      [username, email, password] # plain text
+    )
+    session[:type] = "success"
+    session[:message] = "Registration successful. Please login."
+    redirect '/login'
+
+  rescue SQLite3::ConstraintException
+    session[:type] = "error"
+    session[:message] = "Email already exists"
+    redirect '/signup'
   rescue => e
-    halt 500, "Failed to load page Home : #{e.message}"
+    halt 500, "Registration failed: #{e.message}"
   end
 end
 
-
-post '/singUp' do 
-    username = params[:username] 
-    email = params[:email] 
-    password = params[:password] 
-    password_again = params[:password_again]
-    begin
-      if (password != password_again)
-        session[:type] = "error"
-        session[:message] = "passwords not match, Please check and try again"
-      end
-      hashpassword = BCrypt::Password.create(password)
-      DB.execute("INSERT INTO users (username, email, password) VALUES (?,?,?)",[username, email, hashpassword])
-      session[:type] = "success"
-      session[:message] = "Your Registration was Successful"
-    rescue => e
-      halt 500, "Failed to Registration : #{e.message}"
-    end
-end
+# ----------------------------
+# POST LOGIN
+# ----------------------------
 post '/login' do
-  email = params[:email]
+  email = params[:email]&.strip
   password = params[:password]
-  user = DB.execute("SELECT * FROM users WHERE email = ?",[email]).first
-  if(user.nil?)
+
+  user = DB.execute("SELECT * FROM users WHERE email = ?", [email]).first
+
+  if user.nil?
     session[:type] = "error"
-    session[:message] = "Email Not Found"
-  elsif (BCrypt::Password.new(user["password"]) == password)
-    session[:type] = "success"
-    session[:message] = "Hello #{user["username"]}"
+    session[:message] = "Email not found"
+    redirect '/login'
+  end
+
+  if user["password"] == password
     session[:user_id] = user["id"]
-    @user = user
-    redirect "/home"
+    session[:type] = "success"
+    session[:message] = "Welcome #{user['username']}"
+    redirect '/home'
   else
     session[:type] = "error"
-    session[:message] = "Password Not correct"
+    session[:message] = "Incorrect password"
+    redirect '/login'
   end
 end
 
+# ----------------------------
+# OPTIONAL: SESSION TEST
+# ----------------------------
+get '/session-test' do
+  session[:count] ||= 0
+  session[:count] += 1
+  "Session counter: #{session[:count]}"
+end

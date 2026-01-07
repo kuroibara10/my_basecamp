@@ -1,9 +1,18 @@
 require 'sinatra'
 require 'sqlite3'
+require 'securerandom'
 
 set :port, 8080
 set :bind, '0.0.0.0'
 enable :sissions
+
+use Rack::Session::Cookie,
+  key: 'app.session',
+  path: '/',
+  secret: SecureRandom.hex(64),  # generates 128-character hex string
+  expire_after: 3600,
+  same_site: :lax
+
 
 DB = SQLite3::Database.new("db/manager.db")
 DB.results_as_hash=true
