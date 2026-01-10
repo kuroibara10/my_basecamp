@@ -1,50 +1,71 @@
+/* Base styling */
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f6fa;
+  background: linear-gradient(135deg, #f0f4ff, #dfe9f3);
   margin: 0;
   padding: 0;
+  color: #2f3640;
 }
 
+/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background-color: #2f3640;
+  padding: 20px 50px;
+  background: linear-gradient(90deg, #3742fa, #70a1ff);
   color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.6em;
+  font-size: 1.8em;
+  letter-spacing: 1px;
 }
 
 a.logout-btn {
   text-decoration: none;
   color: #fff;
-  background-color: #e84118;
-  padding: 8px 15px;
-  border-radius: 5px;
+  background-color: #ff6b6b;
+  padding: 10px 18px;
+  border-radius: 8px;
   font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+a.logout-btn:hover {
+  background-color: #ff4757;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Main content */
 main {
-  padding: 30px 50px;
+  padding: 40px 60px;
 }
 
+/* Forms */
 form {
   max-width: 600px;
   margin: 0 auto;
   background-color: #fff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
 }
 
 form label {
   display: block;
   margin-top: 15px;
-  font-weight: bold;
+  font-weight: 600;
   color: #2f3640;
 }
 
@@ -52,46 +73,66 @@ form input[type="text"],
 form input[type="email"],
 form textarea {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-top: 5px;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid #dcdde1;
   font-size: 1em;
   box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form textarea:focus {
+  border-color: #3742fa;
+  box-shadow: 0 0 8px rgba(55, 66, 250, 0.3);
+  outline: none;
 }
 
 form textarea {
   resize: vertical;
-  min-height: 100px;
+  min-height: 120px;
 }
 
 form button {
   margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #44bd32;
+  padding: 12px 25px;
+  background: linear-gradient(90deg, #44bd32, #4cd137);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 form button:hover {
-  background-color: #4cd137;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(90deg, #4cd137, #44bd32);
 }
 
+/* Project cards */
 .project-card {
   background-color: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .project-card h1,
 .project-card h2 {
   margin-top: 0;
+  color: #3742fa;
 }
 
 .project-card p {
@@ -102,28 +143,32 @@ form button:hover {
 .project-card a {
   display: inline-block;
   margin-top: 15px;
-  padding: 8px 12px;
-  background-color: #487eb0;
+  padding: 10px 16px;
+  background: linear-gradient(90deg, #487eb0, #74b9ff);
   color: #fff;
   text-decoration: none;
-  border-radius: 8px;
-  transition: 0.2s;
+  border-radius: 12px;
+  transition: all 0.3s ease;
 }
 
 .project-card a:hover {
-  background-color: #40739e;
+  background: linear-gradient(90deg, #40739e, #60a3bc);
+  transform: translateY(-2px);
 }
 
+/* Back button */
 .back-btn {
   display: inline-block;
   margin-top: 20px;
-  padding: 8px 15px;
+  padding: 10px 18px;
   background-color: #718093;
   color: #fff;
-  border-radius: 8px;
+  border-radius: 12px;
   text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .back-btn:hover {
   background-color: #636e72;
+  transform: translateY(-2px);
 }
