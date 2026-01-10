@@ -3,7 +3,7 @@ require 'sqlite3'
 require 'securerandom'
 
 set :port, 8080
-set :bind, '0.0.0.0'
+set :port, ENV.fetch("PORT", 3000)
 enable :sissions
 
 use Rack::Session::Cookie,
