@@ -22,13 +22,12 @@ The system supports role-based access control, distinguishing between regular us
 - Fixed Controller
 
 ## Installation
-
-gem install sinatra
-gem install bundler
-gem install sqlite3
-gem install securerandom
-gem install rackup
-gem install puma
+```gem install sinatra```
+```gem install bundler```
+```gem install sqlite3```
+```gem install securerandom```
+```gem install rackup```
+```gem install puma```
 
 ## Usage
 
