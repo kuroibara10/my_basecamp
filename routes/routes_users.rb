@@ -1,15 +1,9 @@
-# Routes : 4 types requests
-# get : fetch data
-# post : Send or add data
-# put : update data
-# delete : delete data
 require_relative '../models/user.rb'
 
 get '/users' do
   content_type :html
   begin
     @users = User.all
-    # @users = DB.execute("SELECT * FROM users")
     erb :index
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -33,8 +27,6 @@ post '/newUser' do
   password = params[:password]
   begin
     user_id = User.create(username, email, password)
-    # DB.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?);",[username, email, password])
-    # user_id = DB.last_insert_row_id
     redirect "/showUser/#{user_id}"
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -58,7 +50,6 @@ put '/updateUser' do
   email = params[:email]
   begin
     User.update(username, email, id)
-    # DB.execute("UPDATE users SET username = ?,  email = ? WHERE id = ?",[username, email, id])
     redirect "/showUser/#{id}"
   rescue => e
     halt 500, "Error is #{e.message}"
@@ -73,7 +64,6 @@ put '/changePassword' do
   begin
     if password == password_again
       User.changePassword(password, id)
-      # DB.execute("UPDATE users SET password = ? WHERE id = ?",[password, id])
       session[:type_chpass] = "success"
       session[:message_chpass] = "Update successfully user : #{username}"
       redirect "/showUser/#{id}"
@@ -91,7 +81,6 @@ delete '/deleteUser/:id' do
   id = params[:id]
   begin
     User.destroy(id)
-    # DB.execute("DELETE FROM users WHERE id = ?",[id])
     redirect "/users"
   rescue => e
     halt 500, "Error is #{e.message}"

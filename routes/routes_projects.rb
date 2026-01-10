@@ -14,7 +14,6 @@ get '/home/create_project' do
   content_type :html
   id = params[:id]
   begin
-    # @project = Project.show(id)
     erb :"projects/createProject"
   rescue => e
     halt 500, "Error is #{e.message}"
